@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Protocolo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body>
+
+<div class="container">
+    <h2 class="text-center">Consulta de Protocolo</h2>
+    <form id="protocolForm">
+        <div class="mb-3">
+            <label for="protocol" class="form-label">Número do Protocolo</label>
+            <input type="text" class="form-control" id="protocol" required>
+        </div>
+        <div class="mb-3">
+            <label for="chatType" class="form-label">Selecione o Chat</label>
+            <select class="form-control" id="chatType" required>
+                <option value="Acessórias - Chat">Acessórias - Chat</option>
+                <option value="Sittax - Chat">Sittax - Chat</option>
+            </select>
+        </div>
+        <button onclick="showLoading()" type="submit" class="btn btn-primary w-100 ">Consultar</button>
+        <div style="text-align: center; margin-top: 20px;">
+            <p>&copy; 2024 Elton Santos</p>
+        </div>        
+    </form>
+
+    <div id="loadingContainer" style="display: none; text-align: center; margin-top: 20px;">
+        <div class="robot-animation">
+            <img src="../static/img/drib.gif" alt="Robô carregando" class="robot-image">
+        </div>
+        <p>Calma ai que eu vou resumir aqui<br>Só quer mamão só quer mel!</p>
+    </div>    
+
+    <div id="result" class="result-box" style="display:none;">
+        <!--<h4>Resultado da Consulta em JSON:</h4>-->
+        <!--<pre id="resultData"></pre>-->
+
+        <h4>Resumo da Conversa:</h4>
+        <pre id="summaryData"></pre>
+
+        <button id="copyButton" class="btn btn-warning mt-3">Copiar Protocolo e Resumo</button>
+
+        <div id="importBox" style="display:none; margin-top: 20px;">
+            <h4>Importar para o Bitrix?</h4>
+            <form id="bitrixForm">
+                <div class="mb-3">
+                    <label for="cnpj" class="form-label">CNPJ - 00.000.000/0000-00</label>
+                    <input type="text" class="form-control" id="cnpj" name="cnpj" maxlength="18" placeholder="Digito o CNPJ" required>
+                </div>
+                <div class="mb-3">
+                    <label for="responsible" class="form-label">Responsável</label>
+                    <select class="form-control" id="responsible" required>
+                        <option value="" selected>Selecione o responsável</option>
+                        <option value="515">Gabriele Blazius</option>
+                        <option value="527">Gabriel Aires</option>
+                        <option value="513">Gabriel Fernandes</option>
+                        <option value="205">Gabriel Rangel</option>
+                        <option value="209">Elton Santos</option>
+                        <option value="213">Lucas Diego</option>
+                        <option value="423">Nathan Moraes</option>
+                        <option value="173">Victor Cals</option>
+                        <option value="399">Raul Castelnou</option>
+                        <option value="311">Diogo Gonçalves</option>
+                        <option value="217">Matheus Martins</option>
+                        <option value="225">Felipe Silverio</option>
+                        <option value="295">Jayana Barbosa</option>
+                        <option value="461">Thonne Cleiton</option>
+                        <option value="541">Paulo Barbosa</option>
+                        <option value="371">Paulo Filho</option>
+                        <option value="537">Bruno Andrade</option>
+                        <option value="43">Gustavo Coelho</option>
+                        <option value="537">Bruna Magalhães</option>
+                        <option value="273">Henrique Makuch</option>
+                        <option value="429">Sara Ribeiro</option>
+                        <option value="465">Leandro Santos</option>
+                        <option value="511">Millena Herrero</option>
+                    </select>
+                </div>
+
+                <!--Aplicar aqui um select para fechar o chamado com assunto-->
+
+                <button type="submit" class="btn btn-primary w-100">Consultar Empresa e Importar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>
