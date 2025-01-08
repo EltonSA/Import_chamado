@@ -61,6 +61,17 @@ link_domain_digisac=LINK-DO-SEU-DOMINIO-DIGISAC
 ### Link do domínio Bitrix24
 LINK_DOMAIN_BITRIX=LINK-DO-SEU-DOMINIO-BITRIX
 
+```bash
+#Key open ai
+chave_key_gpt="your-api-key-openai"
+
+# Key digisac
+chave_key_digisac="your-api-key-digisac"
+
+# Domain digisac
+link_domain_digisac="your-domain-digisac"
+```
+
 **O arquivo .env será automaticamente carregado pelo código para configurar as variáveis de ambiente.**
 
 Copyright (c) 2025 Elton Santos
