@@ -1,23 +1,29 @@
 from flask import Flask, render_template, request, jsonify
+from dotenv import load_dotenv
+import os
 import requests
 import json
 
+# Carrega as variáveis de ambiente do arquivo .env
+load_dotenv()
+
 app = Flask(__name__)
 
-# URL base da API e endpoint completo
-BASE_URL = "https://setuptecnologia.digisac.co/api/v1"
-ENDPOINT = "/tickets/export"
+# Configuração de URLs e endpoints
+BASE_URL = os.getenv("link_domain_digisac")
+ENDPOINT = "/api/v1/tickets/export"
+FULL_URL = f"https://{BASE_URL}{ENDPOINT}"
 
 # Cabeçalhos para a requisição
 HEADERS = {
-    "Authorization": "Bearer API_DIGISAC",
+    "Authorization": f"Bearer {os.getenv('chave_key_digisac')}",
     "Content-Type": "application/json"
 }
 
 # API key do OpenAI
-OPENAI_API_KEY = "APUI_KEY"
+OPENAI_API_KEY = os.getenv('chave_key_gpt')
 
-# Função para fazer a consulta no ChatGPT
+# Função para gerar resumo com o ChatGPT
 def gerar_resumo(texto):
     url = "https://api.openai.com/v1/chat/completions"
     headers = {
@@ -28,66 +34,71 @@ def gerar_resumo(texto):
     payload = {
         "model": "gpt-4",
         "messages": [
-            {"role": "system", "content": "Você é um assistente de resumo de conversas, que vai coletar o nome do cliente, nome do atendente, dia e hora do atendimento"},
+            {
+                "role": "system",
+                "content": (
+                    "Você é um assistente que gera resumos de conversas. Extraia o nome do cliente, "
+                    "nome do atendente, data e hora do atendimento e o resumo da conversa"
+                )
+            },
             {"role": "user", "content": texto}
         ]
     }
 
-    response = requests.post(url, headers=headers, json=payload)
-
-    if response.status_code == 200:
+    try:
+        response = requests.post(url, headers=headers, json=payload)
+        response.raise_for_status()  # Levanta uma exceção para erros HTTP
         resposta = response.json()
         resumo = resposta['choices'][0]['message']['content']
         return resumo
-    else:
-        return "Erro ao gerar resumo com o ChatGPT."
+    except requests.exceptions.RequestException as e:
+        return f"Erro ao gerar resumo com o ChatGPT: {e}"
+    except (KeyError, IndexError):
+        return "Erro ao processar a resposta do ChatGPT."
 
+# Rota principal
 @app.route('/')
 def index():
     return render_template('index.html')
 
+# Rota para consultar um protocolo
 @app.route('/consultar', methods=['POST'])
 def consultar_protocolo():
-    protocolo = request.form['protocol']
+    protocolo = request.form.get('protocol')
 
     if not protocolo:
         return jsonify({"error": "Por favor, insira o número do protocolo."}), 400
 
     # Corpo da requisição
-    BODY = {
-        "protocol": protocolo
-    }
-
-    url = f"{BASE_URL}{ENDPOINT}"
+    BODY = {"protocol": protocolo}
 
     try:
-        # Fazendo a requisição POST para a API
-        response = requests.post(url, headers=HEADERS, json=BODY)
-        response.raise_for_status()  # Levanta exceção para erros HTTP
+        # Fazendo a requisição POST para a API do Digisac
+        response = requests.post(FULL_URL, headers=HEADERS, json=BODY)
+        response.raise_for_status()
 
         # Verificando o tipo de conteúdo retornado
-        content_type = response.headers.get('Content-Type')
+        content_type = response.headers.get('Content-Type', '')
 
         if 'application/json' in content_type:
-            # Processando a resposta JSON
             try:
                 data = response.json()
-                # Enviando o conteúdo da resposta para o ChatGPT
                 texto_resposta = json.dumps(data, indent=4, ensure_ascii=False)
                 resumo = gerar_resumo(texto_resposta)
                 return jsonify({"resumo": resumo, "dados": data})
             except json.JSONDecodeError:
                 return jsonify({"error": "A resposta não está em formato JSON válido."}), 500
         else:
-            # Caso a resposta não seja em JSON, vamos enviar o conteúdo bruto (texto) para o ChatGPT
-            texto_resposta = response.text  # Pegando o conteúdo bruto da resposta
+            # Caso a resposta não seja JSON, processa como texto
+            texto_resposta = response.text
             resumo = gerar_resumo(texto_resposta)
-            return jsonify({"resumo": resumo, "dados": response.text})
+            return jsonify({"resumo": resumo, "dados": texto_resposta})
 
     except requests.exceptions.HTTPError as http_err:
-        return jsonify({"error": f"Erro HTTP ocorreu: {http_err}"}), 500
+        return jsonify({"error": f"Erro HTTP: {http_err}"}), 500
     except requests.exceptions.RequestException as req_err:
         return jsonify({"error": f"Erro na requisição: {req_err}"}), 500
 
+# Executa o aplicativo Flask
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5005)

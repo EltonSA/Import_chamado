@@ -1,4 +1,8 @@
-const BITRIX_URL = "https://your_link/rest/301/gyer7nrqxonhk609/crm.company.list.json";
+const chave_01 = localStorage.getItem("chaveBitrix_01");
+const chave_02 = localStorage.getItem("chaveBitrix_02");
+const link_domain_bitrix = localStorage.getItem("linkBitrix");
+
+const BITRIX_URL = `https://${link_domain_bitrix}/rest/301/${chave_01}/crm.company.list.json`;
 const CnpjField = 'UF_CRM_1701275490640';
 
 // Função para formatar o CNPJ
@@ -145,7 +149,7 @@ document.getElementById('bitrixForm').addEventListener('submit', function(event)
             const companyId = company.ID;
             const companyName = company.TITLE;
 
-            fetch('https://your_link/rest/301/qpxysdxpw2x9l9j5/tasks.task.add', {
+            fetch(`https://${link_domain_bitrix}/rest/301/${chave_02}/tasks.task.add`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

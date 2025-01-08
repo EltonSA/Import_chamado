@@ -11,10 +11,10 @@
 <body>
 
 <div class="container">
-    <h2 class="text-center">Consulta de Protocolo</h2>
+    <h2 class="text-center">Resumir conversa</h2>
     <form id="protocolForm">
         <div class="mb-3">
-            <label for="protocol" class="form-label">Número do Protocolo</label>
+            <label for="protocol" class="form-label">Número do Protocolo (Digisac)</label>
             <input type="text" class="form-control" id="protocol" required>
         </div>
         <div class="mb-3">
@@ -24,7 +24,7 @@
                 <option value="Sittax - Chat">Sittax - Chat</option>
             </select>
         </div>
-        <button onclick="showLoading()" type="submit" class="btn btn-primary w-100 ">Consultar</button>
+        <button onclick="showLoading()" type="submit" class="btn btn-primary w-100 ">Resumir</button>
         <div style="text-align: center; margin-top: 20px;">
             <p>&copy; 2024 Elton Santos</p>
         </div>        
@@ -34,7 +34,7 @@
         <div class="robot-animation">
             <img src="../static/img/drib.gif" alt="Robô carregando" class="robot-image">
         </div>
-        <p>Calma ai que eu vou resumir aqui<br>Só quer mamão só quer mel!</p>
+        <p>FPD quer tudo na mão.<br>Só não roubei teu emprego porque não é a hora!</p>
     </div>    
 
     <div id="result" class="result-box" style="display:none;">
@@ -44,7 +44,7 @@
         <h4>Resumo da Conversa:</h4>
         <pre id="summaryData"></pre>
 
-        <button id="copyButton" class="btn btn-warning mt-3">Copiar Protocolo e Resumo</button>
+        <button id="copyButton" class="btn btn-warning mt-3">Copiar Resumo</button>
 
         <div id="importBox" style="display:none; margin-top: 20px;">
             <h4>Importar para o Bitrix?</h4>
@@ -85,7 +85,7 @@
 
                 <!--Aplicar aqui um select para fechar o chamado com assunto-->
 
-                <button type="submit" class="btn btn-primary w-100">Consultar Empresa e Importar</button>
+                <button type="submit" class="btn btn-primary w-100">Importar para o bitrix</button>
             </form>
         </div>
     </div>

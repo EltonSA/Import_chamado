@@ -1,0 +1,3 @@
+# Ignorar arquivos sensíveis
+.env
+config.js
