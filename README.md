@@ -4,6 +4,9 @@ Este projeto é uma aplicação que se integra com as APIs do **Digisac** e **Bi
 
 A aplicação usa variáveis de ambiente para configurar as URLs do Digisac e Bitrix24, bem como outras configurações sensíveis. O front-end utiliza **Python** e **JavaScript** para consumir as APIs.
 
+![Imagem do projeto](https://i.postimg.cc/t4fkHcTf/img.png)
+
+
 ## Funcionalidades
 
 - **Integração com a API do Digisac**: Obtém o conteúdo de atendimentos do Digisac.
