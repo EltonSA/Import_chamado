@@ -1,4 +1,4 @@
-# Projeto Bitrix24 Integration
+# Projeto Digisac | Bitrix24 |  Integration
 
 Este projeto é uma aplicação que se integra com as APIs do **Digisac** e **Bitrix24** para acessar conversas de um contato, encaminhá-las para o **OpenAI** (GPT) para gerar um resumo e, em seguida, importar essas informações para o Bitrix24 na aba de empresas. 
 
