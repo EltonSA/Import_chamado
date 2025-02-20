@@ -91,10 +91,9 @@ footer a:hover {
 /* Adicionando a animação de onda para cada letra do nome */
 footer .name-animation {
     display: inline-block;
-    font-weight: bold;
+    font-weight: sans-serif;
     color: #007bff; /* Cor azul suave */
     font-size: 16px; /* Ajuste o tamanho da fonte conforme necessário */
-    font-weight: sans-serif;
 }
 
 footer .name-animation span {

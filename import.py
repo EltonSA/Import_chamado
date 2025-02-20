@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 import requests
 import json
+import tiktoken
 
 # Carrega as variáveis de ambiente do arquivo .env
 load_dotenv()
@@ -23,8 +24,18 @@ HEADERS = {
 # API key do OpenAI
 OPENAI_API_KEY = os.getenv('chave_key_gpt')
 
+# Inicializa o tokenizador do GPT-4 turbo
+encoder = tiktoken.get_encoding("cl100k_base")
+
 # Função para gerar resumo com o ChatGPT
 def gerar_resumo(texto):
+    # Tokenizar o texto
+    tokens = encoder.encode(texto)
+    
+    # Verificar se o texto ultrapassa o limite de tokens do GPT-3
+    if len(tokens) > 4000:  # Limite aproximado para GPT-3
+        return "Erro: O texto é muito longo. Reduza o tamanho do conteúdo."
+
     url = "https://api.openai.com/v1/chat/completions"
     headers = {
         "Content-Type": "application/json",
@@ -32,14 +43,15 @@ def gerar_resumo(texto):
     }
 
     payload = {
-        "model": "gpt-4",
+        "model": "gpt-3.5-turbo",
         "messages": [
             {
                 "role": "system",
                 "content": (
-                    "Você é especialista por resumir o atendimento para registro de informações"
-                    "Deve extrair o nome do cliente, data e hora, descrição (resumo do atendimento), pontuar o que o cliente relatou e status final (resolvido ou não)"
-                    "Para cada extração, quebre as duas linhas para melhor leitura."
+                    "Você é especialista por resumir o atendimento para registro de informações."
+                    " Deve extrair o nome do cliente, data e hora, descrição (resumo do atendimento),"
+                    " pontuar o que o cliente relatou e status final (resolvido ou não)."
+                    " Para cada extração, quebre as duas linhas para melhor leitura."
                 )
             },
             {"role": "user", "content": texto}
