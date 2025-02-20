@@ -48,10 +48,9 @@ def gerar_resumo(texto):
             {
                 "role": "system",
                 "content": (
-                    "Você é especialista por resumir o atendimento para registro de informações."
-                    " Deve extrair o nome do cliente, data e hora, descrição (resumo do atendimento),"
-                    " pontuar o que o cliente relatou e status final (resolvido ou não)."
-                    " Para cada extração, quebre as duas linhas para melhor leitura."
+                    "Você é especialista por resumir o atendimento para registro de informações"
+                    "Deve extrair o nome do cliente, data e hora, descrição (resumo do atendimento), pontuar o que o cliente relatou e status final (resolvido ou não)"
+                    "Para cada extração, quebre as duas linhas para melhor leitura"
                 )
             },
             {"role": "user", "content": texto}
@@ -96,9 +95,22 @@ def consultar_protocolo():
         if 'application/json' in content_type:
             try:
                 data = response.json()
+
+                # Aqui você pode acessar as informações que você precisa da resposta.
+                # Exemplo: Supondo que o campo "conversation" contenha o texto da conversa
+                conversa = data.get('conversation', '')  # Ajuste conforme a estrutura da resposta
+
+                # Tokeniza o conteúdo da conversa
+                tokens_conversa = encoder.encode(conversa)
+
+                # Verificar se o conteúdo tokenizado é válido e dentro do limite
+                if len(tokens_conversa) > 4000:
+                    return jsonify({"error": "A conversa é muito longa para ser processada."}), 400
+
                 texto_resposta = json.dumps(data, indent=4, ensure_ascii=False)
                 resumo = gerar_resumo(texto_resposta)
                 return jsonify({"resumo": resumo, "dados": data})
+
             except json.JSONDecodeError:
                 return jsonify({"error": "A resposta não está em formato JSON válido."}), 500
         else:
