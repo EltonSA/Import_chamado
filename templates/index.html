@@ -11,7 +11,7 @@
 <body>
 
 <div class="container">
-    <h2 class="text-center">Resumir conversa</h2>
+    <h2 class="text-center">Resumi IA</h2>
     <form id="protocolForm">
         <div class="mb-3">
             <label for="protocol" class="form-label">Número do Protocolo (Digisac)</label>
@@ -20,21 +20,18 @@
         <div class="mb-3">
             <label for="chatType" class="form-label">Selecione o Chat</label>
             <select class="form-control" id="chatType" required>
-                <option value="Acessórias - Chat">Acessórias - Chat</option>
+                <option value="Acessórias - CHAT">Acessórias - CHAT</option>
                 <option value="Sittax - Chat">Sittax - Chat</option>
             </select>
         </div>
-        <button onclick="showLoading()" type="submit" class="btn btn-primary w-100 ">Resumir</button>
-        <div style="text-align: center; margin-top: 20px;">
-            <p>&copy; 2024 Elton Santos</p>
-        </div>        
+        <button onclick="showLoading()" type="submit" class="btn btn-primary w-100 ">Resumir</button>      
     </form>
 
     <div id="loadingContainer" style="display: none; text-align: center; margin-top: 20px;">
         <div class="robot-animation">
             <img src="../static/img/drib.gif" alt="Robô carregando" class="robot-image">
         </div>
-        <p>FPD quer tudo na mão.<br>Só não roubei teu emprego porque não é a hora!</p>
+        <p>Quer tudo na mão.<br>Só não roubei teu emprego porque não é a hora!</p>
     </div>    
 
     <div id="result" class="result-box" style="display:none;">
@@ -58,6 +55,7 @@
                     <select class="form-control" id="responsible" required>
                         <option value="" selected>Selecione o responsável</option>
                         <option value="515">Gabriele Blazius</option>
+                        <option value="543">Gabriele Araujo Fernandes</option>
                         <option value="527">Gabriel Aires</option>
                         <option value="513">Gabriel Fernandes</option>
                         <option value="205">Gabriel Rangel</option>
@@ -80,6 +78,7 @@
                         <option value="429">Sara Ribeiro</option>
                         <option value="465">Leandro Santos</option>
                         <option value="511">Millena Herrero</option>
+                        <option value="539">Antony Lidio</option>
                     </select>
                 </div>
 
@@ -90,6 +89,18 @@
         </div>
     </div>
 </div>
+
+<footer class="text-center mt-5">
+    <p>&copy; 2025, Desenvolvido por <strong>Elton Santos</strong></p>
+    <div>
+        <a href="https://wa.me/5541998306017" target="_blank" class="btn btn-outline-success btn-sm">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+        <a href="https://www.linkedin.com/in/elton-santos-br/" target="_blank" class="btn btn-outline-primary btn-sm">
+            <i class="fab fa-linkedin"></i> LinkedIn
+        </a>
+    </div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>

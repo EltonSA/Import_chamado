@@ -37,8 +37,9 @@ def gerar_resumo(texto):
             {
                 "role": "system",
                 "content": (
-                    "Você é um assistente que gera resumos de conversas. Extraia o nome do cliente, "
-                    "nome do atendente, data e hora do atendimento e o resumo da conversa"
+                    "Você é especialista por resumir o atendimento para registro de informações"
+                    "Deve extrair o nome do cliente, data e hora, descrição (resumo do atendimento), pontuar o que o cliente relatou e status final (resolvido ou não)"
+                    "Para cada extração, quebre as duas linhas para melhor leitura."
                 )
             },
             {"role": "user", "content": texto}

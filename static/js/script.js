@@ -1,9 +1,7 @@
-const chave_01 = localStorage.getItem("chaveBitrix_01");
-const chave_02 = localStorage.getItem("chaveBitrix_02");
-const link_domain_bitrix = localStorage.getItem("linkBitrix");
-
-const BITRIX_URL = `https://${link_domain_bitrix}/rest/301/${chave_01}/crm.company.list.json`;
+const BITRIX_URL = "https://setup.bitrix24.com.br/rest/301/gyer7nrqxonhk609/crm.company.list.json";
 const CnpjField = 'UF_CRM_1701275490640';
+const now = new Date();
+const deadline = now.toISOString(); // Formato correto para Bitrix24
 
 // Função para formatar o CNPJ
 function formatarCNPJ(cnpj) {
@@ -149,14 +147,14 @@ document.getElementById('bitrixForm').addEventListener('submit', function(event)
             const companyId = company.ID;
             const companyName = company.TITLE;
 
-            fetch(`https://${link_domain_bitrix}/rest/301/${chave_02}/tasks.task.add`, {
+            fetch('https://setup.bitrix24.com.br/rest/301/qpxysdxpw2x9l9j5/tasks.task.add', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     fields: {
-                        TITLE: `${chatType} em ${new Date().toLocaleString()}`,
+                        TITLE: `${chatType}`,
                         RESPONSIBLE_ID: responsibleId, // Responsável selecionado
-                        DEADLINE: "2024-12-15T16:00:00+03:00",
+                        DEADLINE: deadline,
                         DESCRIPTION: `Protocolo Digisac: ${protocolo}\n\n${resumo}`,
                         UF_CRM_TASK: [`CO_${companyId}`] // Vincula à empresa encontrada
                     }
