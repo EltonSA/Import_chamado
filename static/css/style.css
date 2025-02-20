@@ -22,6 +22,17 @@ body {
     border: 1px solid #444;
 }
 
+/* Título */
+h2 {
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    color: #007bff; /* Verde suave para destaque */
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 2%;
+}
+
 .form-control:focus {
     background-color: #333;
     border-color: #007bff;
@@ -75,6 +86,34 @@ footer a {
 
 footer a:hover {
     text-decoration: underline;
+}
+
+/* Adicionando a animação de onda para cada letra do nome */
+footer .name-animation {
+    display: inline-block;
+    font-weight: bold;
+    color: #007bff; /* Cor azul suave */
+    font-size: 16px; /* Ajuste o tamanho da fonte conforme necessário */
+    font-weight: sans-serif;
+}
+
+footer .name-animation span {
+    display: inline-block;
+    animation: waveEffect 3s ease-in-out infinite;
+    animation-delay: calc(0.1s * var(--i)); /* Delay para criar o efeito sequencial */
+}
+
+/* Animação de onda */
+@keyframes waveEffect {
+    0% {
+        transform: translateY(0);
+    }
+    25% {
+        transform: translateY(-10px); /* Move para cima */
+    }
+    50% {
+        transform: translateY(0); /* Retorna à posição original */
+    }
 }
 
 /* Animação do robô */
